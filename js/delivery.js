@@ -60,23 +60,3 @@ document.addEventListener("DOMContentLoaded", () => {
   renderOrderSummary();
   setupForm();
 });
-
-document.getElementById("delivery-form").addEventListener("submit", function (e) {
-  e.preventDefault();
-
-  const deliveryDetails = {
-    name: document.getElementById("name").value,
-    surname: document.getElementById("surname").value,
-    phone: document.getElementById("phone").value,
-    email: document.getElementById("email").value,
-    delivery_method: document.querySelector('input[name="delivery_method"]:checked').value,
-    region: document.getElementById("region").value,
-    office: document.getElementById("office").value,
-    notes: document.getElementById("notes").value
-  };
-
-  localStorage.setItem("deliveryDetails", JSON.stringify(deliveryDetails));
-
-  // Go to payment page
-  window.location.href = "pay.html";
-});
