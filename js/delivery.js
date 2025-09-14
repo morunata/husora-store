@@ -1,6 +1,5 @@
 // delivery.js
 
-// --- CART HELPERS ---
 function getCart() {
   return JSON.parse(localStorage.getItem("cart")) || [];
 }
@@ -39,32 +38,15 @@ function renderOrderSummary() {
   });
 
   totalEl.textContent = total.toFixed(2);
-  return total; // return total so we can use it in form submit
 }
 
-// --- FORM HANDLING ---
 function setupForm() {
   const form = document.getElementById("delivery-form");
-  if (!form) return;
-
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    // Calculate order total
-    const orderTotal = renderOrderSummary();
-
-    // Collect values explicitly so keys match Apps Script & Sheet headers
-    const deliveryDetails = {
-      name: document.getElementById("name").value.trim(),
-      surname: document.getElementById("surname").value.trim(),
-      phone: document.getElementById("phone").value.trim(),
-      email: document.getElementById("email").value.trim(),
-      delivery_method: document.querySelector("input[name='delivery_method']:checked")?.value || "",
-      region: document.getElementById("region").value.trim(),
-      office: document.getElementById("office").value.trim(),
-      notes: document.getElementById("notes").value.trim(),
-      order_total: orderTotal.toFixed(2) // <-- include total
-    };
+    const formData = new FormData(form);
+    const deliveryDetails = Object.fromEntries(formData.entries());
 
     // Save in localStorage to use in pay.html
     localStorage.setItem("deliveryDetails", JSON.stringify(deliveryDetails));
@@ -74,8 +56,27 @@ function setupForm() {
   });
 }
 
-// --- INIT ---
 document.addEventListener("DOMContentLoaded", () => {
   renderOrderSummary();
   setupForm();
+});
+
+document.getElementById("delivery-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const deliveryDetails = {
+    name: document.getElementById("name").value,
+    surname: document.getElementById("surname").value,
+    phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
+    delivery_method: document.querySelector('input[name="delivery_method"]:checked').value,
+    region: document.getElementById("region").value,
+    office: document.getElementById("office").value,
+    notes: document.getElementById("notes").value
+  };
+
+  localStorage.setItem("deliveryDetails", JSON.stringify(deliveryDetails));
+
+  // Go to payment page
+  window.location.href = "pay.html";
 });
