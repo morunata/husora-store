@@ -1,0 +1,94 @@
+/* Container for the entire search results dropdown */
+#desktop-search-results {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  margin-top: 0.5rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-width: 1px;
+  border-color: #e5e7eb;
+}
+
+/* Style for individual sections within the search box */
+.search-section-title {
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 600; /* font-semibold */
+  color: #6b7280; /* text-gray-500 */
+  text-transform: uppercase;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Style for suggested search terms */
+.search-suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+.search-suggestion-item:hover {
+  background-color: #f3f4f6; /* hover:bg-gray-100 */
+}
+
+.search-suggestion-item .suggestion-icon {
+  color: #9ca3af; /* text-gray-400 */
+}
+
+/* Style for product search results */
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+.search-result-item:hover {
+  background-color: #f3f4f6; /* hover:bg-gray-100 */
+}
+
+.search-result-image {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.375rem;
+  object-fit: cover;
+}
+
+.search-result-details h4 {
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 600; /* font-semibold */
+  color: #000000;
+}
+
+.search-result-details p {
+  font-size: 0.75rem; /* text-xs */
+  color: #6b7280; /* text-gray-500 */
+}
+
+/* Style for product categories */
+.search-category-item {
+  padding: 0.5rem;
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+.search-category-item:hover {
+  background-color: #f3f4f6; /* hover:bg-gray-100 */
+}
+
+.search-category-item p {
+  font-size: 0.875rem; /* text-sm */
+  color: #2563eb; /* text-blue-600 */
+}

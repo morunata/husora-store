@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доставка - Husora Design</title>
+    <link rel="icon" href="images/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/modal-cart.js"></script>
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/delivery.css">
+    <link rel="stylesheet" href="css/product.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Когато въпрос е активен */
+.faq-item.active {
+  border-color: #2563eb; /* син акцент */
+  box-shadow: 0 0 0 1.5px #2563eb;
+  border-radius: 0 rem;
+}
+
+.faq-item.active .faq-question {
+  color: #2563eb;
+}
+
+.faq-item.active svg {
+  fill: #2563eb;
+  stroke: #2563eb;
+}
+
+.faq-item svg.svg-active {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease-in-out, fill 0.3s ease-in-out;
+}
+
+    </style>
+</head>
+<body>
+    
+<!-- START TOP BAR + NAV BAR DESKTOP & MOBILE --> 
+<header class="bg-white shadow-sm sticky top-0 z-50 ">
+   <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="flex items-center gap-4 w-full md:w-auto">
+         <button id="mobile-menu-toggle" class="md:hidden text-gray-700 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+         </button>
+         <a href="index.html"> <img src="images/husora_logo_header_mobile.png" alt="husora mobile logo" class="h-6 w-auto block md:hidden"> <img src="images/husora_logo_header.png" alt="husora desktop logo" class="h-16 w-auto hidden md:block"> </a> 
+      </div>
+      <div class="w-full md:hidden mt-2 search-bar">
+         <div class="relative w-full">
+            <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+               <svg id="mobile-search-icon-default" class="w-5 h-5 text-gray-500 transition-opacity duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <g id="_01_align_center" data-name="01 align center">
+                     <path d="M24,22.586l-6.262-6.262a10.016,10.016,0,1,0-1.414,1.414L22.586,24ZM10,18a8,8,0,1,1,8-8A8.009,8.009,0,0,1,10,18Z"/>
+                  </g>
+               </svg>
+               <svg id="mobile-search-icon-active" class="w-5 h-5 text-gray-500 absolute opacity-0 transition-opacity duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24,22.586l-6.257-6.258a10,10,0,1,0-1.415,1.415L22.586,24Z"/>
+               </svg>
+            </div>
+            <input id="mobile-search-input" type="text" placeholder="Търсене..." class="w-full py-2 pl-10 pr-4 border border-black rounded-full text-black placeholder-gray-500" onkeydown="if(event.key === 'Enter') handleSearch(this.value);" /> 
+         </div>
+      </div>
+      <div class="relative flex-1 max-w-xl hidden md:block">
+         <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+            <svg id="desktop-search-icon-default" class="w-5 h-5 text-black transition-opacity duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+               <g id="_01_align_center" data-name="01 align center">
+                  <path d="M24,22.586l-6.262-6.262a10.016,10.016,0,1,0-1.414,1.414L22.586,24ZM10,18a8,8,0,1,1,8-8A8.009,8,0,0,1,10,18Z"/>
+               </g>
+            </svg>
+            <svg id="desktop-search-icon-active" class="w-5 h-5 text-gray-500 absolute opacity-0 transition-opacity duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+               <path d="M24,22.586l-6.262-6.262a10.016,10.016,0,1,0-1.414,1.414L22.586,24ZM10,18a8,8,0,1,1,8-8A8.009,8,0,0,1,10,18Z"/>
+            </svg>
+         </div>
+         <input id="desktop-search-input" type="text" placeholder="Търсене..." class="w-full py-2 pl-10 pr-4 border border-black rounded-full text-black placeholder-gray-700 search-input-glow" onkeydown="if(event.key === 'Enter') handleSearch(this.value);" autocomplete="off" /> 
+         <button id="clear-search" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700 hidden">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+         </button>
+         <div id="desktop-search-results" class="absolute left-0 right-0 mt-2 bg-white rounded-md shadow-lg z-40 max-h-80 scrollbar-hide hidden"></div>
+      </div>
+      <div class="flex items-center gap-0 icon-buttons">
+         <button class="group relative flex items-center gap-2 bg-white font text-black hover:text-blue-600 px-4 py-2">
+            <svg class="w-6 h-6 fill-current transition-opacity duration-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
+               <path d="M12.006,12.309c3.611-.021,5.555-1.971,5.622-5.671-.062-3.56-2.111-5.614-5.634-5.637-3.561,.022-5.622,2.17-5.622,5.637,0,3.571,2.062,5.651,5.634,5.672Zm-.012-9.309c2.437,.016,3.591,1.183,3.634,3.636-.047,2.559-1.133,3.657-3.622,3.672-2.495-.015-3.582-1.108-3.634-3.654,.05-2.511,1.171-3.639,3.622-3.654Z"/>
+               <path d="M11.994,13.661c-5.328,.034-8.195,2.911-8.291,8.322-.01,.552,.43,1.008,.982,1.018,.516-.019,1.007-.43,1.018-.982,.076-4.311,2.08-6.331,6.291-6.357,4.168,.027,6.23,2.106,6.304,6.356,.01,.546,.456,.983,1,.983h.018c.552-.01,.992-.465,.983-1.017-.092-5.333-3.036-8.288-8.304-8.322Z"/>
+            </svg>
+            <svg class="w-6 h-6 fill-current absolute top-2 left-4 transition-opacity duration-300 opacity-0 group-hover:opacity-100" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
+               <path d="M12.006,12.309c3.611-.021,5.555-1.971,5.622-5.671-.062-3.56-2.111-5.614-5.634-5.637-3.561,.022-5.622,2.122-5.622,5.672s2.062,5.615,5.634,5.636Z"/>
+               <path d="M11.994,13.661c-5.328,.034-8.195,2.911-8.291,8.322-.004,.268,.099,.527,.287,.718s.445,.299,.713,.299h14.595c.268,0,.525-.108,.713-.299,.188-.191,.291-.45,.287-.718-.092-5.333-3.036-8.288-8.304-8.322Z"/>
+            </svg>
+            <span class="hidden md:inline">Акаунт</span> 
+         </button>
+         <a href="bookmarks.html" class="group relative px-4 py-2 bg-white font-bold transition-colors duration-300 flex items-center gap-1 hover:text-blue-600">
+            <svg id="bookmark-icon-default" class="w-5 h-5 transition-opacity duration-200 text-black group-hover:text-blue-600 group-hover:opacity-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+               <path d="M20,0H5c-1.654,0-3,1.346-3,3V21c0,1.654,1.346,3,3,3H22V2c0-1.103-.897-2-2-2Zm0,18H8V2h4V11l2.5-2.5,2.5,2.5V2h3V18ZM5,2h1V18h-1c-.351,0-.687,.061-1,.172V3c0-.551,.449-1,1-1Zm0,20c-.551,0-1-.449-1-1s.449-1,1-1h15v2H5Z"/>
+            </svg>
+            <svg id="bookmark-icon-hover" class="w-5 h-5 absolute transition-opacity duration-200 opacity-0 text-black group-hover:text-blue-600 group-hover:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+               <path d="M4,18c-.738-.001-1.451,.271-2,.765V3C2,1.343,3.343,0,5,0h1V18h-2ZM20,0h-2V11l-2.5-2.5-2.5,2.5V0h-5V18h14V2c0-1.105-.895-2-2-2ZM2,22c0,1.105,.895,2,2,2H22v-4H4c-1.105,0-2,.895-2,2Z"/>
+            </svg>
+            <span id="bookmark-text"></span> 
+         </a>
+         <a href="#" id="cart-button" class="group relative px-4 py-2 bg-white font-bold text-black hover:text-blue-600 transition-colors duration-300 flex items-center gap-1">
+            <svg class="w-5 h-5 text-current transition-opacity duration-300 text-blue-600 opacity-100 group-hover:opacity-0 absolute" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+               <g id="_01_align_center" data-name="01 align center">
+                  <path d="M24,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H0V2H1.222a1,1,0,0,1,.993.883L3.8,16.351A3,3,0,0,0,6.778,19H20V17H6.778a1,1,0,0,1-.993-.884L5.654,15H21.836ZM20.164,13H5.419L4.478,5H21.607Z"/>
+                  <circle cx="7" cy="22" r="2"/>
+                  <circle cx="17" cy="22" r="2"/>
+               </g>
+            </svg>
+            <svg class="w-5 h-5 text-current transition-opacity duration-300 opacity-0 group-hover:opacity-100 absolute" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+               <path d="M24,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H0V2H1.222a1,1,0,0,1,.993.883L3.8,16.351A3,3,0,0,0,6.778,19H20V17H6.778a1,1,0,0,1-.993-.884L5.654,15H21.836Z"/>
+               <circle cx="7" cy="22" r="2"/>
+               <circle cx="17" cy="22" r="2"/>
+            </svg>
+            <span id="cart-item-count" class="absolute -top-4 -right-7 bg-red-400 text-white text-xs rounded-full px-2 py-0.5 hidden"></span> 
+         </a>
+      </div>
+   </div>
+</header>
+<div id="nav-buttons-desktop" class="fixed top-[72px] w-full bg-opacity- bg-gray-100 z-40 shadow-lg transform transition-transform duration-300 ease-in-out">
+   <div class="max-w-6xl mx-auto px-12 py-2 flex flex-wrap justify-center gap-6"> <a href="index.html" class="px-12 py-2 bg-none font- hover:text-blue-600 transition-colors duration-300">Начало</a> <a href="catalog.html" class="px-12 py-2 bg-none font- hover:text-blue-600 transition-colors duration-300">Каталог</a> <a href="packages.html" class="px-12 py-2 bg-none font-semibold hover:text-blue-600 transition-colors duration-300">Пакети</a> <a href="appreciation.html" class="px-12 py-2 bg-none font-semibold hover:text-blue-600 transition-colors duration-300">Признателност</a> <a href="about.html" class="px-12 py-2 bg-none font-semibold hover:text-blue-600 transition-colors duration-300">За нас</a> </div>
+</div>
+<div id="mobile-menu" class="fixed top-16 left-0 w-2/3 max-w-sm h-full bg-white z-50 shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+   <nav class="flex flex-col p-6 space-y-4"> <a href="index.html" class="font-semibold hover:text-blue-600">Начало</a> <a href="catalog.html" class="font- hover:text-blue-600">Каталог</a> <a href="packages.html" class="font- hover:text-blue-600">Пакети</a> <a href="appreciation.html" class="font- hover:text-blue-600">Признателност</a> <a href="about.html" class="font- hover:text-blue-600">За нас</a> </nav>
+</div>
+</div> 
+<!-- END TOP BAR + NAV BAR DESKTOP & MOBILE -->
+
+<div class="w-full h-32 bg-white"></div>
+<section class="py-12 bg-gray-100">
+    <main class="container mx-auto  bg-gray-100 p-6">
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                            <div class="lg:w-1/9 bg-white p-6 rounded-sm shadow-md border border-gray-300 h-fit">
+                    <h2 class="text-2xl font-bold mb-4">Преглед на поръчката</h2>
+                    <div class="mb-24 border-t border-gray-200" id="order-summary-container">
+                    </div>
+                    <div class="mb-4 border-t border-gray-200"></div>
+                    <div class="flex justify-between items-center">
+                        <p class="text-xl font-bold">Общо:</p>
+                        <p class="text-xl font-bold text-blue-600"><span id="order-summary-total">0.00</span> лв.</p>
+                    </div>
+                    <div class="mt-4 border-t border-gray-200"></div>
+                    <div class="flex justify-between  items-center mt-6">
+    <button type="submit"
+        onclick="
+            this.classList.add('clicked-effect');
+            setTimeout(() => {
+                this.classList.remove('clicked-effect');
+            }, 150);
+        "
+        class="animate-glow px-14 h-14 rounded-full border-2 border-blue-600 bg-blue-600 text-white font-semibold shadow-md transition duration-300 hover:bg-blue-800 hover:text-white hover:border-blue-800 w-full">
+        Към плащане
+    </button>
+                    </div>
+        <button id="checkout-button"
+        onclick="
+            this.classList.add('clicked-effect');
+            setTimeout(() => {
+                this.classList.remove('clicked-effect');
+                window.location.href = 'cart.html';
+            }, 150);
+        "
+        class="px-14 h-14 rounded-full border-2 border-gray-100 bg-gray-100 text-gray-700 font-semibold shadow-md transition duration-300 hover:bg-gray-800 hover:text-white hover:border-gray-800 w-full mt-5">
+        Назад
+    </button>
+                </div>
+                
+            <div class="md:col-span-2 bg-white p-6 rounded-lg h-fit bg-gray-100 border-gray-200 p-6 mb-0">
+               <h1 class="text-4xl font-bold text-gray-900 mb-8">Детайли на доставка</h1>
+               <div id="" class="bg-gray-100 border-t border-gray-200 p-4 mb-0"></div>
+                <form id="delivery-form" action="#">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 ">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Име</label>
+                            <input type="text" name="name" id="name" required class="mt-1 block w-full rounded-sm border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+                        </div>
+                        <div>
+                            <label for="surname" class="block text-sm font-medium text-gray-700">Фамилия</label>
+                            <input type="text" name="surname" id="surname" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Телефонен номер</label>
+                            <input type="tel" name="phone" id="phone" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Имейл</label>
+                            <input type="email" name="email" id="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="border-t mb-8 mt-8"></div>
+                        <label class="block text-sm font-medium text-gray-700">Начин на доставка</label>
+                        <div class="mt-1 space-y-2">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="delivery_method" value="speedy_office" class="form-radio text-blue-600" checked>
+                                <span class="ml-2 text-gray-700">Офис на Speedy</span>
+                            </label>
+                            <label class="inline-flex items-center ml-4">
+                                <input type="radio" name="delivery_method" value="econt_office" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Офис на Econt</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="border-t mb-8 mt-8"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        
+                        <div>
+                            <label for="region" class="block text-sm font-medium text-gray-700">Област</label>
+                            <input type="text" name="region" id="region" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+                        </div>
+                        <div>
+                            <label for="office" class="block text-sm font-medium text-gray-700">Офис</label>
+                            <input type="text" name="office" id="office" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="notes" class="block text-sm font-medium text-gray-700">Бележки към поръчката</label>
+                        <textarea name="notes" id="notes" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2"></textarea>
+                    </div>
+
+                    <div class="flex justify-end items-center mt-6">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300">Плащане</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</section>
+
+<section class="bg-gray-100 h-6 relative">
+  <!-- горната част -->
+</section>
+
+<!-- Stepper, абсолютно позициониран на границата -->
+<div class="relative">
+  <nav class="checkout-stepper absolute inset-x-0 -top-4 z-10">
+    <div class="step active">
+      <div class="step-indicator"><span class="dot"></span></div>
+      <span class="step-label">Количка</span>
+    </div>
+    <div class="step"><div class="step-indicator">2</div><span class="step-label">Доставка</span></div>
+    <div class="step"><div class="step-indicator">3</div><span class="step-label">Плащане</span></div>
+  </nav>
+</div>
+
+<section class="bg-white py-12 mb-12">
+  <div class="max-w-4xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Често задавани въпроси</h2>
+
+    <div class="space-y-4" id="faq-container">
+      <!-- Въпрос -->
+      <div class="faq-item border border-gray-200 rounded-sm shadow-sm border border-gray-300 hover:border-blue-500">
+        <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-medium text-gray-800">
+          <span>Как мога да върна продукт?</span>
+          <svg class="-mr-1 ml-2 h-5 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M1.51,6.079a1.492,1.492,0,0,1,1.06.44l7.673,7.672a2.5,2.5,0,0,0,3.536,0L21.44,6.529A1.5,1.5,0,1,1,23.561,8.65L15.9,16.312a5.505,5.505,0,0,1-7.778,0L.449,8.64A1.5,1.5,0,0,1,1.51,6.079Z" />
+          </svg>
+        </button>
+        <div class="faq-answer px-6 pb-4 hidden text-gray-600">
+          Можете да върнете продукт до 14 дни след получаването му, като попълните формата за връщане и го изпратите обратно.
+        </div>
+      </div>
+
+      <div class="faq-item border border-gray-200 rounded-sm shadow-sm border border-gray-300 hover:border-blue-500">
+        <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-medium text-gray-800">
+          <span>Какви методи за плащане предлагате?</span>
+          <svg class="-mr-1 ml-2 h-5 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M1.51,6.079a1.492,1.492,0,0,1,1.06.44l7.673,7.672a2.5,2.5,0,0,0,3.536,0L21.44,6.529A1.5,1.5,0,1,1,23.561,8.65L15.9,16.312a5.505,5.505,0,0,1-7.778,0L.449,8.64A1.5,1.5,0,0,1,1.51,6.079Z" />
+          </svg>
+        </button>
+        <div class="faq-answer px-6 pb-4 hidden text-gray-600">
+          Приемаме плащания с карта, наложен платеж, както и банков превод.
+        </div>
+      </div>
+
+      <div class="faq-item border border-gray-200 rounded-sm shadow-sm border border-gray-300 hover:border-blue-500">
+        <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-medium text-gray-800">
+          <span>Колко време отнема доставката?</span>
+          <svg class="-mr-1 ml-2 h-5 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M1.51,6.079a1.492,1.492,0,0,1,1.06.44l7.673,7.672a2.5,2.5,0,0,0,3.536,0L21.44,6.529A1.5,1.5,0,1,1,23.561,8.65L15.9,16.312a5.505,5.505,0,0,1-7.778,0L.449,8.64A1.5,1.5,0,0,1,1.51,6.079Z" />
+          </svg>
+        </button>
+        <div class="faq-answer px-6 pb-4 hidden text-gray-600">
+          Обикновено доставката отнема 2-5 работни дни в зависимост от населеното място.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <footer class="bg-gray-800 text-white text-sm py-8 text-center">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-left">
+        <div>
+          <h3 class="text-lg font-semibold mb-4">About Us</h3>
+          <p class="text-gray-400">Husora Design is dedicated to bringing you high-quality products that combine
+            innovation and style. We believe in craftsmanship and customer satisfaction.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+          <ul>
+            <li class="mb-2"><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Products</a></li>
+            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+            <li class="mb-2"><a href="appreciation.html" class="text-gray-400 hover:text-white">Appreciation</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+          <p class="text-gray-400">Email: info@husoradesign.com</p>
+          <p class="text-gray-400">Phone: +1 (123) 456-7890</p>
+          <div class="flex space-x-4 mt-4">
+            <a href="#" class="text-gray-400 hover:text-white"><img src="images/socials/facebook.svg" alt="Facebook"
+                class="h-6 w-6"></a>
+            <a href="#" class="text-gray-400 hover:text-white"><img src="images/socials/instagram.svg" alt="Instagram"
+                class="h-6 w-6"></a>
+            <a href="#" class="text-gray-400 hover:text-white"><img src="images/socials/messenger.svg" alt="Messenger"
+                class="h-6 w-6"></a>
+          </div>
+        </div>
+      </div>
+      <p class="mt-8 text-gray-500">© 2024 Husora Design. All rights reserved.</p>
+    </div>
+  </footer>
+
+<script>
+  document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+      const faqItem = button.closest('.faq-item');
+      const answer = button.nextElementSibling;
+      const icon = button.querySelector('svg');
+
+      // затваряне на другите
+      document.querySelectorAll('.faq-item').forEach(item => {
+        if (item !== faqItem) {
+          item.classList.remove('active');
+          item.querySelector('.faq-answer').classList.add('hidden');
+          item.querySelector('svg').classList.remove('svg-active');
+        }
+      });
+
+      // превключване на текущия
+      faqItem.classList.toggle('active');
+      answer.classList.toggle('hidden');
+      icon.classList.toggle('svg-active');
+    });
+  });
+</script>
+
+<script>
+  function handleSearch(query) {
+  if (query) {
+    window.location.href = `catalog.html?search=${encodeURIComponent(query)}`;
+  }
+}
+
+// Function to handle search icon visibility and styling
+function handleSearchIconToggle(inputId, defaultIconId, activeIconId) {
+  const input = document.getElementById(inputId);
+  const defaultIcon = document.getElementById(defaultIconId);
+  const activeIcon = document.getElementById(activeIconId);
+  const clearSearchButton = document.getElementById('clear-search');
+
+  // Get the clear button
+  function update() {
+    // Ensure input element exists before proceeding
+    if (!input) return;
+    const isActive = document.activeElement === input || input.value.trim() !== '';
+
+    // Toggle icon visibility
+    if (defaultIcon) defaultIcon.style.opacity = isActive ? '0' : '1';
+    if (activeIcon) activeIcon.style.opacity = isActive ? '1' : '0';
+
+    // Toggle text color
+    if (isActive) {
+      if (defaultIcon) defaultIcon.classList.add('text-blue-500');
+      if (activeIcon) activeIcon.classList.add('text-blue-500');
+      // Show clear button if active and has value
+      if (clearSearchButton) clearSearchButton.classList.remove('hidden');
+    } else {
+      if (defaultIcon) defaultIcon.classList.remove('text-blue-500');
+      if (activeIcon) activeIcon.classList.remove('text-blue-500');
+      // Hide clear button
+      if (clearSearchButton) clearSearchButton.classList.add('hidden');
+    }
+  }
+
+  if (input) {
+    // Only add listeners if input exists
+    input.addEventListener('focus', update);
+    input.addEventListener('blur', update);
+    input.addEventListener('input', update);
+    // Initial update on page load
+    update();
+  }
+
+  // Add event listener for clear search button
+  if (clearSearchButton) {
+    clearSearchButton.addEventListener('click', () => {
+      if (input) input.value = '';
+      update(); // Update icons/button visibility after clearing
+      handleSearch(''); // Trigger a search with an empty query to reset catalog
+    });
+  }
+}
+
+// Initialize search icon toggles for both mobile and desktop
+handleSearchIconToggle('mobile-search-input', 'mobile-search-icon-default', 'mobile-search-icon-active');
+handleSearchIconToggle('desktop-search-input', 'desktop-search-icon-default', 'desktop-search-icon-active');
+
+// Mobile menu toggle
+const toggleBtn = document.getElementById('mobile-menu-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
+
+toggleBtn.addEventListener('click', () => {
+  mobileMenu.classList.toggle('-translate-x-full');
+});
+
+// Desktop header scroll hide/show
+let lastScrollY = window.scrollY;
+const nav = document.getElementById("nav-buttons-desktop");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > lastScrollY) {
+    // Scrolling down – hide nav with slide up
+    nav.classList.add("-translate-y-full");
+  } else {
+    // Scrolling up – show nav with slide down
+    nav.classList.remove("-translate-y-full");
+  }
+  lastScrollY = window.scrollY;
+});
+</script>
+
+    <script src="js/productslist.js"></script>
+    <script src="js/delivery.js"></script>
+    <script src="js/cart.js"></script>
+    
+</body>
+</html>
