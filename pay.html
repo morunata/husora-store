@@ -42,8 +42,7 @@
   </footer>
 
   <script>
-    // ⚠️ Сложи тук твоя нов Web App URL от Google Apps Script
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKeU1zMmoJbK5sWWr6GtPWQC-cNuIgOE3nJYm5DgS4pFMRDn20Rh4jzGYE7fz-4nPZ/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxQDoC7t-fHWzXO3PpEgrg6fs7SaAOIuTuxjPNZ7pQkW5QHeyhz7TLaWKLbtJuO_qOb/exec"; // 👈 paste here
 
     document.getElementById("confirm-payment").addEventListener("click", async () => {
       const deliveryDetails = JSON.parse(localStorage.getItem("deliveryDetails")) || {};
@@ -56,31 +55,21 @@
       };
 
       try {
-        const response = await fetch(SCRIPT_URL, {
+        await fetch(SCRIPT_URL, {
           method: "POST",
           body: JSON.stringify(orderData),
           headers: { "Content-Type": "application/json" }
         });
 
-        if (!response.ok) {
-          throw new Error("HTTP грешка: " + response.status);
-        }
-
-        const result = await response.json();
-        if (result.result === "success") {
-          alert("Благодарим Ви! Вашата поръчка е записана.");
-          localStorage.removeItem("cart");
-          localStorage.removeItem("deliveryDetails");
-          window.location.href = "index.html";
-        } else {
-          alert("⚠️ Грешка при запис: " + (result.error || "неизвестна"));
-        }
+        alert("Благодарим Ви! Вашата поръчка е записана.");
+        localStorage.removeItem("cart");
+        localStorage.removeItem("deliveryDetails");
+        window.location.href = "index.html";
       } catch (err) {
         alert("Възникна грешка при изпращането на поръчката.");
-        console.error("Грешка:", err);
+        console.error(err);
       }
     });
   </script>
 </body>
 </html>
-
