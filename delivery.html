@@ -246,12 +246,14 @@
 <!-- Stepper, абсолютно позициониран на границата -->
 <div class="relative">
   <nav class="checkout-stepper absolute inset-x-0 -top-4 z-10">
-    <div class="step active">
-      <div class="step-indicator"><span class="dot"></span></div>
+    <div class="step"><div class="step-indicator">1</div> 
       <span class="step-label">Количка</span>
     </div>
-    <div class="step"><div class="step-indicator">2</div><span class="step-label">Доставка</span></div>
-    <div class="step"><div class="step-indicator">3</div><span class="step-label">Плащане</span></div>
+    <div class="step active">
+      <div class="step-indicator"><span class="dot"></span></div>
+    <span class="step-label">Доставка</span></div>
+    <div class="step"><div class="step-indicator">3</div> 
+    <span class="step-label">Плащане</span></div>
   </nav>
 </div>
 
@@ -450,4 +452,5 @@ window.addEventListener("scroll", () => {
     <script src="js/cart.js"></script>
     
 </body>
+
 </html>
