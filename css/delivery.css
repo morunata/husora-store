@@ -4,29 +4,33 @@
   width: 100%;
   font-size: 1rem;
   color: #111827; /* text-gray-900 */
-  border: 1px solid #d1d5db; /* border-gray-300 */
-  border-radius: 0.75rem; /* rounded-xl */
+  border: 0px solid #d1d5db; /* border-gray-300 */
+  border-radius: 0.125rem; /* rounded-xl */
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* shadow-sm */
 }
 
 .ts-wrapper.focus {
-  border-color: #3b82f6; /* border-blue-500 */
-  box-shadow: 0 0 0 1px #3b82f6; /* ring-1 ring-blue-500 */
+  border-color: #3b82f6;    /* focus:border-blue-500 (#3b82f6) */
+  outline: none;            /* Tailwind removes outline by default */
+  box-shadow: 0 0 0 1.7px #3b82f6; /* focus:ring-blue-500 */
 }
 
 /* Input вътре в Tom Select */
 .ts-control {
   display: flex;
   align-items: center;
+  color:#000000;
   min-height: 42px;
-  padding: 0.5rem 0.75rem; /* py-2 px-3 */
+  padding: 0.5rem 0.5rem; /* py-2 px-3 */
   background-color: #fff;
-  border-radius: 0.75rem; /* rounded-xl */
+  border-radius: 0.125rem; /* rounded-xl */
+  font-size: medium;
+  font-weight: 400;
 }
 
 /* Placeholder */
 .ts-wrapper .ts-control > input {
-  color: #9ca3af; /* text-gray-400 */
+  color: rgb(55,65,81); /* text-gray-400 */
 }
 
 /* Dropdown */
@@ -34,10 +38,28 @@
   margin-top: 0.25rem; /* mt-1 */
   background-color: #fff;
   border: 1px solid #e5e7eb; /* border-gray-200 */
-  border-radius: 0.75rem; /* rounded-xl */
+  border-radius: 0.50rem; /* rounded-xl */
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
               0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-lg */
   z-index: 50;
+}
+
+.ts-dropdown .option, .ts-dropdown .optgroup-header, .ts-dropdown .no-results, .ts-dropdown .create {
+  padding: 8px 8px;
+}
+
+.ts-dropdown, .ts-control, .ts-control input {
+  color: #303030;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 18px;
+}
+
+.ts-dropdown, .ts-control, .ts-control input {
+  color: rgb(55,65,81);
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 18px;
 }
 
 /* Dropdown item */
@@ -48,7 +70,7 @@
 }
 
 .ts-dropdown .ts-option:hover {
-  background-color: #eff6ff; /* bg-blue-50 */
+  background-color: #fff3ef; /* bg-blue-50 */
   color: #2563eb; /* text-blue-600 */
 }
 
@@ -57,4 +79,49 @@
 .ts-dropdown .ts-option.active {
   background-color: #3b82f6; /* bg-blue-500 */
   color: #fff;
+}
+
+.ts-dropdown .active {
+  background-color: rgb(244,244,244);
+  color: rgb(55,65,81);
+}
+
+.my-input {
+  margin-top: 0.25rem;      /* mt-1 = 4px */
+  display: block;           /* block */
+  width: 100%;              /* w-full */
+  border-radius: 0.125rem;  /* rounded-sm */
+  border: 1px solid #d1d5db;/* border-gray-300 (#d1d5db) */
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* shadow-sm */
+  padding: 0.5rem;          /* p-2 = 8px */
+  font-weight: 400;
+}
+
+/* focus styles */
+.my-input:focus {
+  border-color: #3b82f6;    /* focus:border-blue-500 (#3b82f6) */
+  outline: none;            /* Tailwind removes outline by default */
+  box-shadow: 0 0 0 1px #3b82f6; /* focus:ring-blue-500 */
+}
+
+#order-summary-container {
+  max-height: 300px;   /* или колкото искаш */
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.my-input.invalid,
+.ts-wrapper.invalid .ts-control {
+  border-color: #ef4444 !important;
+  background-color: #fee2e2 !important;
+}
+
+.error-message {
+  display: none;
+  font-size: 0.875rem;
+  color: #ef4444;
+  margin-top: 0.25rem;
+}
+.error-message.active {
+  display: block;
 }
