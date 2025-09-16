@@ -8,13 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
-    <link rel="stylesheet" href="css/style.css">
     <script src="js/modal-cart.js"></script>
     <link rel="stylesheet" href="css/cart.css">
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/delivery.css">
     <link rel="stylesheet" href="css/product.css">
-    <link rel="stylesheet" href="css/delivery.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -145,8 +142,9 @@
 
                             <div class="lg:w-1/9 bg-white p-6 rounded-sm shadow-md border border-gray-300 h-fit">
                     <h2 class="text-2xl font-bold mb-4">Преглед на поръчката</h2>
-                    <div class="mb-24 border-t border-gray-200" id="order-summary-container">
-                    </div>
+                    <div class="mb-44 border-t border-gray-200 max-h-64 overflow-y-auto pr-2" id="order-summary-container">
+</div>
+
                     <div class="mb-4 border-t border-gray-200"></div>
                     <div class="flex justify-between items-center">
                         <p class="text-xl font-bold">Общо:</p>
@@ -154,16 +152,18 @@
                     </div>
                     <div class="mt-4 border-t border-gray-200"></div>
                     <div class="flex justify-between  items-center mt-6">
-    <button type="submit"
-        onclick="
-            this.classList.add('clicked-effect');
-            setTimeout(() => {
-                this.classList.remove('clicked-effect');
-            }, 150);
-        "
-        class="animate-glow px-14 h-14 rounded-full border-2 border-blue-600 bg-blue-600 text-white font-semibold shadow-md transition duration-300 hover:bg-blue-800 hover:text-white hover:border-blue-800 w-full">
-        Към плащане
-    </button>
+<button type="button"
+    onclick="
+        this.classList.add('clicked-effect');
+        setTimeout(() => {
+            this.classList.remove('clicked-effect');
+            document.getElementById('delivery-form').requestSubmit(); 
+        }, 150);
+    "
+    class="animate-glow px-14 h-14 rounded-full border-2 border-blue-600 bg-blue-600 text-white font-semibold shadow-md transition duration-300 hover:bg-blue-800 hover:text-white hover:border-blue-800 w-full">
+    Към плащане
+</button>
+
                     </div>
         <button id="checkout-button"
         onclick="
@@ -179,31 +179,36 @@
                 </div>
                 
 <div class="md:col-span-2 bg-white p-6 rounded-lg h-fit bg-gray-100 border-gray-200 mb-0">
-  <h1 class="text-4xl font-bold text-gray-900 mb-8">Детайли на доставка</h1>
+  <h1 class="text-4xl font-bold text-gray-900 mb-2">Детайли на доставка</h1>
+
+<div class="mt-4 border-t border-gray-200 mb-6"></div>
 
   <form id="delivery-form" action="#">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-      <div>
-        <label for="name" class="block text-sm font-medium text-gray-700">Име</label>
-        <input type="text" name="name" id="name" required
-          class="mt-1 block w-full rounded-sm border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
-      </div>
-      <div>
-        <label for="surname" class="block text-sm font-medium text-gray-700">Фамилия</label>
-        <input type="text" name="surname" id="surname" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
-      </div>
-      <div>
-        <label for="phone" class="block text-sm font-medium text-gray-700">Телефонен номер</label>
-        <input type="tel" name="phone" id="phone" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
-      </div>
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-700">Имейл</label>
-        <input type="email" name="email" id="email" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
-      </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    <div>
+      <label for="name" class="block text-sm font-medium text-gray-700">Име *</label>
+      <input type="text" name="name" id="name" required class="my-input">
+      <p class="error-message">Името е невалидно</p>
     </div>
+
+    <div>
+      <label for="surname" class="block text-sm font-medium text-gray-700">Фамилия *</label>
+      <input type="text" name="surname" id="surname" required class="my-input">
+      <p class="error-message">Фамилията е невалидна</p>
+    </div>
+
+    <div>
+      <label for="phone" class="block text-sm font-medium text-gray-700">Телефон *</label>
+      <input type="tel" name="phone" id="phone" required pattern="^0[0-9]{9}$" class="my-input">
+      <p class="error-message">Невалиден телефон</p>
+    </div>
+
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-700">Имейл</label>
+      <input type="email" name="email" id="email" class="my-input">
+      <p class="error-message">Невалиден имейл адрес</p>
+    </div>
+  </div>
 
     <div class="mb-4">
       <div class="border-t mb-8 mt-8"></div>
@@ -222,37 +227,33 @@
 
     <div class="border-t mb-8 mt-8"></div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-  <!-- Област -->
-  <div>
-    <label for="region" class="block text-sm font-medium text-gray-700 mb-1">Област</label>
-    <select id="region" placeholder="Избери област">
-      <option value="">-- Избери област --</option>
-    </select>
-  </div>
-
-  <!-- Офис -->
-  <div>
-    <label for="office" class="block text-sm font-medium text-gray-700 mb-1">Офис</label>
-    <select id="office" placeholder="Избери офис">
-      <option value="">-- Избери офис --</option>
-    </select>
-  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+<!-- Област -->
+<div>
+  <label for="region" class="block text-sm font-medium text-gray-700 mb-1">Област *</label>
+  <select id="region" placeholder="Избери област">
+    <option value="">-- Избери област --</option>
+  </select>
+  <p class="error-message">Моля, изберете област.</p>
 </div>
+
+<!-- Офис -->
+<div>
+  <label for="office" class="block text-sm font-medium text-gray-700 mb-1">Офис *</label>
+  <select id="office" placeholder="Избери офис">
+    <option value="">-- Избери офис --</option>
+  </select>
+  <p class="error-message">Моля, изберете офис.</p>
+</div>
+  </div>
 
 
     <div class="mb-4">
       <label for="notes" class="block text-sm font-medium text-gray-700">Бележки към поръчката</label>
       <textarea name="notes" id="notes" rows="4"
-        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2"></textarea>
+        class="my-input"></textarea>
     </div>
 
-    <div class="flex justify-end items-center mt-6">
-      <button type="submit"
-        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300">
-        Плащане
-      </button>
-    </div>
   </form>
 </div>
         </div>
@@ -358,6 +359,89 @@
     </div>
   </footer>
 
+<script>
+// === Helpers ===
+function validateInput(input) {
+  const error = input.nextElementSibling;
+  if (!input.checkValidity()) {
+    input.classList.add("invalid");
+    if (error) error.classList.add("active");
+    return false;
+  } else {
+    input.classList.remove("invalid");
+    if (error) error.classList.remove("active");
+    return true;
+  }
+}
+
+// touched флаг за селектите
+const touchedSelects = { region: false, office: false };
+
+function validateSelect(id, force = false) {
+  const select = document.getElementById(id);
+  const wrapper = select.tomselect?.wrapper;
+  const error = select.nextElementSibling;
+
+  // ако не е пипано и не е принудителна проверка → не правим нищо
+  if (!touchedSelects[id] && !force) {
+    return true;
+  }
+
+  if (!select.value) {
+    if (wrapper) wrapper.classList.add("invalid");
+    if (error) error.classList.add("active");
+    return false;
+  } else {
+    if (wrapper) wrapper.classList.remove("invalid");
+    if (error) error.classList.remove("active");
+    return true;
+  }
+}
+
+// === Input-и ===
+document.querySelectorAll(".my-input").forEach(input => {
+  input.addEventListener("blur", () => validateInput(input));
+  input.addEventListener("input", () => validateInput(input));
+});
+
+// === Select-и (Tom Select) ===
+["region", "office"].forEach(id => {
+  const select = document.getElementById(id);
+  if (select.tomselect) {
+    // когато се отвори менюто → маркираме като touched
+    select.tomselect.on("focus", () => { touchedSelects[id] = true; });
+    select.tomselect.on("dropdown_open", () => { touchedSelects[id] = true; });
+
+    // при blur или change → ако е пипано вече → валидираме
+    select.tomselect.on("blur", () => validateSelect(id));
+    select.tomselect.on("change", () => validateSelect(id));
+  }
+});
+
+// === Към плащане ===
+document.querySelector("button[onclick*='delivery-form']").addEventListener("click", function(e) {
+  e.preventDefault();
+  const form = document.getElementById("delivery-form");
+  let valid = true;
+
+  // Input-и
+  form.querySelectorAll(".my-input").forEach(input => {
+    if (!validateInput(input)) valid = false;
+  });
+
+  // Select-и → тук вече force=true
+  ["region", "office"].forEach(id => {
+    touchedSelects[id] = true; // насила маркираме като пипано
+    if (!validateSelect(id, true)) valid = false;
+  });
+
+  if (valid) {
+    form.submit();
+  }
+});
+
+</script>
+
 <!-- JS -->
 <script>
 let econtData = [];
@@ -372,7 +456,7 @@ async function loadEcont() {
 }
 
 async function loadSpeedy() {
-  const res = await fetch("data/econt_offices.json");
+  const res = await fetch("data/speedy_offices.json");
   speedyData = await res.json();
 }
 
@@ -559,5 +643,3 @@ window.addEventListener("scroll", () => {
     
 </body>
 </html>
-
-
