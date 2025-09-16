@@ -207,14 +207,6 @@ h2 {
        to be a specific Oswald weight, e.g., font-weight: 400; */
   }
 
-button {
-
-    font-family: 'Manrope', sans-serif;
-    font-weight: 100; /* Apply to the root html element */
-    /* You can optionally set a default font-weight here if you want most text
-       to be a specific Oswald weight, e.g., font-weight: 400; */
-
-}
 
 div {
 
@@ -222,18 +214,17 @@ div {
     font-weight: 400;
   }
 
+button, input, optgroup, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
 p {
 
     font-family: 'Manrope', sans-serif;
     font-weight: 400; /* Apply to the root html element */
-    /* You can optionally set a default font-weight here if you want most text
-       to be a specific Oswald weight, e.g., font-weight: 400; */
-  }
-
-input {
-
-    font-family: 'Manrope', sans-serif;
-    font-weight: 200; /* Apply to the root html element */
     /* You can optionally set a default font-weight here if you want most text
        to be a specific Oswald weight, e.g., font-weight: 400; */
   }
