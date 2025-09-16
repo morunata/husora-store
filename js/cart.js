@@ -1,7 +1,7 @@
 // cart.js – 3 колони: ляво (инфо+qty), среда (вариации/цветове), дясно (цена+X)
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-const cartContainer = document.getElementById("cart-items-container");
+const cartContainer = document.getElementById("cart-items-container"); // only exists on cart.html
 const orderSummaryContainer = document.getElementById("order-summary-container");
 const orderSummaryTotal = document.getElementById("order-summary-total");
 
@@ -36,6 +36,15 @@ function createColorMap() {
 
 // === Рендериране на количката ===
 function renderCart() {
+  if (!cartContainer) return; // skip if not on cart.html
+
+  cartContainer.innerHTML = "";
+
+  if (cart.length === 0) {
+    cartContainer.innerHTML = "<p class='text-gray-600'>Количката е празна.</p>";
+    return;
+  }
+
   cartContainer.innerHTML = "";
 
   if (cart.length === 0) {
