@@ -367,7 +367,7 @@ let currentCourier = "econt"; // по подразбиране
 let regionSelect, officeSelect;
 
 async function loadEcont() {
-  const res = await fetch("/data/econt_offices.json");
+  const res = await fetch("data/econt_offices.json");
   econtData = await res.json();
 }
 
@@ -559,4 +559,5 @@ window.addEventListener("scroll", () => {
     
 </body>
 </html>
+
 
