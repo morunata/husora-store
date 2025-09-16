@@ -6,12 +6,15 @@
     <title>Доставка - Husora Design</title>
     <link rel="icon" href="images/favicon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/modal-cart.js"></script>
     <link rel="stylesheet" href="css/cart.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/delivery.css">
     <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="css/delivery.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -175,66 +178,83 @@
     </button>
                 </div>
                 
-            <div class="md:col-span-2 bg-white p-6 rounded-lg h-fit bg-gray-100 border-gray-200 p-6 mb-0">
-               <h1 class="text-4xl font-bold text-gray-900 mb-8">Детайли на доставка</h1>
-               <div id="" class="bg-gray-100 border-t border-gray-200 p-4 mb-0"></div>
-                <form id="delivery-form" action="#">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 ">
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700">Име</label>
-                            <input type="text" name="name" id="name" required class="mt-1 block w-full rounded-sm border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
-                        </div>
-                        <div>
-                            <label for="surname" class="block text-sm font-medium text-gray-700">Фамилия</label>
-                            <input type="text" name="surname" id="surname" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
-                        </div>
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700">Телефонен номер</label>
-                            <input type="tel" name="phone" id="phone" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">Имейл</label>
-                            <input type="email" name="email" id="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
-                        </div>
-                    </div>
+<div class="md:col-span-2 bg-white p-6 rounded-lg h-fit bg-gray-100 border-gray-200 mb-0">
+  <h1 class="text-4xl font-bold text-gray-900 mb-8">Детайли на доставка</h1>
 
-                    <div class="mb-4">
-                        <div class="border-t mb-8 mt-8"></div>
-                        <label class="block text-sm font-medium text-gray-700">Начин на доставка</label>
-                        <div class="mt-1 space-y-2">
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="delivery_method" value="speedy_office" class="form-radio text-blue-600" checked>
-                                <span class="ml-2 text-gray-700">Офис на Speedy</span>
-                            </label>
-                            <label class="inline-flex items-center ml-4">
-                                <input type="radio" name="delivery_method" value="econt_office" class="form-radio text-blue-600">
-                                <span class="ml-2 text-gray-700">Офис на Econt</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="border-t mb-8 mt-8"></div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        
-                        <div>
-                            <label for="region" class="block text-sm font-medium text-gray-700">Област</label>
-                            <input type="text" name="region" id="region" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
-                        </div>
-                        <div>
-                            <label for="office" class="block text-sm font-medium text-gray-700">Офис</label>
-                            <input type="text" name="office" id="office" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
-                        </div>
-                    </div>
+  <form id="delivery-form" action="#">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700">Име</label>
+        <input type="text" name="name" id="name" required
+          class="mt-1 block w-full rounded-sm border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+      </div>
+      <div>
+        <label for="surname" class="block text-sm font-medium text-gray-700">Фамилия</label>
+        <input type="text" name="surname" id="surname" required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+      </div>
+      <div>
+        <label for="phone" class="block text-sm font-medium text-gray-700">Телефонен номер</label>
+        <input type="tel" name="phone" id="phone" required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Имейл</label>
+        <input type="email" name="email" id="email" required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+      </div>
+    </div>
 
-                    <div class="mb-4">
-                        <label for="notes" class="block text-sm font-medium text-gray-700">Бележки към поръчката</label>
-                        <textarea name="notes" id="notes" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2"></textarea>
-                    </div>
+    <div class="mb-4">
+      <div class="border-t mb-8 mt-8"></div>
+      <label class="block text-sm font-medium text-gray-700">Начин на доставка</label>
+      <div class="mt-1 space-y-2">
+        <label class="inline-flex items-center">
+          <input type="radio" name="delivery_method" value="speedy_office" class="form-radio text-blue-600">
+          <span class="ml-2 text-gray-700">Офис на Speedy</span>
+        </label>
+        <label class="inline-flex items-center ml-4">
+          <input type="radio" name="delivery_method" value="econt_office" class="form-radio text-blue-600" checked>
+          <span class="ml-2 text-gray-700">Офис на Econt</span>
+        </label>
+      </div>
+    </div>
 
-                    <div class="flex justify-end items-center mt-6">
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300">Плащане</button>
-                    </div>
-                </form>
-            </div>
+    <div class="border-t mb-8 mt-8"></div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+  <!-- Област -->
+  <div>
+    <label for="region" class="block text-sm font-medium text-gray-700 mb-1">Област</label>
+    <select id="region" placeholder="Избери област">
+      <option value="">-- Избери област --</option>
+    </select>
+  </div>
+
+  <!-- Офис -->
+  <div>
+    <label for="office" class="block text-sm font-medium text-gray-700 mb-1">Офис</label>
+    <select id="office" placeholder="Избери офис">
+      <option value="">-- Избери офис --</option>
+    </select>
+  </div>
+</div>
+
+
+    <div class="mb-4">
+      <label for="notes" class="block text-sm font-medium text-gray-700">Бележки към поръчката</label>
+      <textarea name="notes" id="notes" rows="4"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2"></textarea>
+    </div>
+
+    <div class="flex justify-end items-center mt-6">
+      <button type="submit"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300">
+        Плащане
+      </button>
+    </div>
+  </form>
+</div>
         </div>
     </main>
 </section>
@@ -337,6 +357,92 @@
       <p class="mt-8 text-gray-500">© 2024 Husora Design. All rights reserved.</p>
     </div>
   </footer>
+
+<!-- JS -->
+<script>
+let econtData = [];
+let speedyData = [];
+let currentCourier = "econt"; // по подразбиране
+
+let regionSelect, officeSelect;
+
+async function loadEcont() {
+  const res = await fetch("/data/econt_offices.json");
+  econtData = await res.json();
+}
+
+async function loadSpeedy() {
+  const res = await fetch("/data/speedy_offices.json");
+  speedyData = await res.json();
+}
+
+function initSelects() {
+  // създаваме Tom Select за регион
+  regionSelect = new TomSelect("#region", {
+    create: false,
+    sortField: { field: "text", direction: "asc" }
+  });
+
+  // създаваме Tom Select за офис
+  officeSelect = new TomSelect("#office", {
+    create: false,
+    sortField: { field: "text", direction: "asc" }
+  });
+
+  // събитие при смяна на регион
+  regionSelect.on("change", function(value) {
+    fillOffices(value);
+  });
+}
+
+function fillRegions() {
+  regionSelect.clearOptions();
+
+  const data = currentCourier === "econt" ? econtData : speedyData;
+  const regions = [...new Set(data.map(o => o.region))].sort();
+
+  regions.forEach(region => {
+    regionSelect.addOption({ value: region, text: region });
+  });
+  regionSelect.refreshOptions(false);
+}
+
+function fillOffices(region) {
+  officeSelect.clearOptions();
+
+  const data = currentCourier === "econt" ? econtData : speedyData;
+  const offices = data.filter(o => o.region === region);
+
+  offices.forEach(o => {
+    officeSelect.addOption({
+      value: o.id,
+      text: `${o.name} – ${o.city}, ${o.address}`
+    });
+  });
+  officeSelect.refreshOptions(false);
+}
+
+// смяна на куриер
+document.querySelectorAll("input[name='delivery_method']").forEach(radio => {
+  radio.addEventListener("change", function () {
+    currentCourier = this.value === "econt_office" ? "econt" : "speedy";
+    fillRegions();
+    officeSelect.clear();
+  });
+});
+
+// зареждаме при стартиране
+(async () => {
+  await loadEcont();
+  await loadSpeedy();
+  initSelects();
+  fillRegions(); // по подразбиране econt
+})();
+</script>
+
+
+
+
 
 <script>
   document.querySelectorAll('.faq-question').forEach(button => {
@@ -452,5 +558,4 @@ window.addEventListener("scroll", () => {
     <script src="js/cart.js"></script>
     
 </body>
-
 </html>
