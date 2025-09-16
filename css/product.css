@@ -287,13 +287,6 @@ label {
     font-weight: 400;
   }
 
-div {
-
-    font-family: 'Manrope', sans-serif;
-    font-weight: 100; /* Apply to the root html element */
-    /* You can optionally set a default font-weight here if you want most text
-       to be a specific Oswald weight, e.g., font-weight: 400; */
-
 }
 
 option {
@@ -379,3 +372,4 @@ input {
 .image-dots-container .dot.active {
     background-color: #3b82f6;
 }
+
