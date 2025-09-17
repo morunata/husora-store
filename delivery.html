@@ -38,6 +38,15 @@
 }
 
     </style>
+
+  <style>
+  /* Glow ефект за избраната кутия */
+  .courier-box input:checked + img + .active-border {
+  border-color: #3b82f6;    /* focus:border-blue-500 (#3b82f6) */
+  outline: none;            /* Tailwind removes outline by default */
+  box-shadow: 0 0 0 0.5px #3b82f6; /* focus:ring-blue-500 */
+  }
+</style>
 </head>
 <body>
     
@@ -152,17 +161,11 @@
                     </div>
                     <div class="mt-4 border-t border-gray-200"></div>
                     <div class="flex justify-between  items-center mt-6">
-<button type="button"
-    onclick="
-        this.classList.add('clicked-effect');
-        setTimeout(() => {
-            this.classList.remove('clicked-effect');
-            document.getElementById('delivery-form').requestSubmit(); 
-        }, 150);
-    "
-    class="animate-glow px-14 h-14 rounded-full border-2 border-blue-600 bg-blue-600 text-white font-semibold shadow-md transition duration-300 hover:bg-blue-800 hover:text-white hover:border-blue-800 w-full">
-    Към плащане
+<button id="go-to-payment" type="button"
+  class="animate-glow px-14 h-14 rounded-full border-2 border-blue-600 bg-blue-600 text-white font-semibold shadow-md transition duration-300 hover:bg-blue-800 hover:text-white hover:border-blue-800 w-full">
+  Към плащане
 </button>
+
 
                     </div>
         <button id="checkout-button"
@@ -213,20 +216,58 @@
     <div class="mb-4">
       <div class="border-t mb-8 mt-8"></div>
       <label class="block text-sm font-medium text-gray-700">Начин на доставка</label>
-      <div class="mt-1 space-y-2">
-        <label class="inline-flex items-center">
-          <input type="radio" name="delivery_method" value="speedy_office" class="form-radio text-blue-600">
-          <span class="ml-2 text-gray-700">Офис на Speedy</span>
-        </label>
-        <label class="inline-flex items-center ml-4">
-          <input type="radio" name="delivery_method" value="econt_office" class="form-radio text-blue-600" checked>
-          <span class="ml-2 text-gray-700">Офис на Econt</span>
-        </label>
-      </div>
-    </div>
+<div class="mt-4 flex gap-6">
+  <!-- Speedy -->
+  <label class="inline-flex items-center cursor-pointer">
+    <input type="radio" name="delivery_method" value="speedy_office" class="form-radio text-blue-600">
+    <span class="ml-2 flex items-center text-gray-700">
+      До офис или автомат на
+      <img src="images/icons/speedy.svg" alt="Speedy" class="h-6 ml-1">
+    </span>
+  </label>
+
+  <!-- Econt -->
+  <label class="inline-flex items-center cursor-pointer">
+    <input type="radio" name="delivery_method" value="econt_office" class="form-radio text-blue-600" checked>
+    <span class="ml-2 flex items-center text-gray-700">
+      До офис или автомат на
+      <img src="images/icons/econt.svg" alt="Econt" class="h-6 ml-1">
+    </span>
+  </label>
+</div>
+
+<div class="mt-4 flex gap-6">
+  <!-- Speedy Adress
+  <label class="inline-flex items-center cursor-pointer">
+    <input type="radio" name="delivery_method" value="speedy_adress" class="form-radio text-blue-600">
+    <span class="ml-2 flex items-center text-gray-700">
+      До мой адрес с
+      <img src="images/icons/speedy.svg" alt="Speedy" class="h-6 ml-1">
+    </span>
+  </label> -->
+
+  <!-- Econt Adress
+  <label class="inline-flex items-center cursor-pointer">
+    <input type="radio" name="delivery_method" value="econt_adress" class="form-radio text-blue-600" checked>
+    <span class="ml-2 flex items-center text-gray-700">
+      До мой адрес с
+      <img src="images/icons/econt.svg" alt="Econt" class="h-6 ml-1">
+    </span>
+  </label> -->
+
+      <!-- Husora Adress
+  <label class="inline-flex items-center cursor-pointer">
+    <input type="radio" name="delivery_method" value="husora_adress" class="form-radio text-blue-600">
+    <span class="ml-2 flex items-center text-gray-700">
+      До мой адрес с
+      <img src="images/husora_logo_header.png" alt="Husora" class="h-8 ml-2">
+    </span>
+  </label> -->
+</div>
+</div>
+
 
     <div class="border-t mb-8 mt-8"></div>
-
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
 <!-- Област -->
 <div>
@@ -259,6 +300,20 @@
         </div>
     </main>
 </section>
+
+<div id="payment-section" class="hidden bg-white p-6 rounded-lg shadow-md mt-8">
+  <h2 class="text-2xl font-bold mb-4">Метод на плащане</h2>
+  <label class="flex items-center space-x-2">
+    <input type="radio" name="paymentMethod" value="На място" checked>
+    <span>На място</span>
+  </label>
+
+  <button id="finishOrderBtn"
+    class="mt-6 px-6 py-3 bg-blue-600 text-white font-semibold rounded-full shadow-md hover:bg-blue-800 transition">
+    Завърши поръчката
+  </button>
+</div>
+
 
 <section class="bg-gray-100 h-6 relative">
   <!-- горната част -->
@@ -359,6 +414,8 @@
     </div>
   </footer>
 
+
+<!-- Error for missing information -->
 <script>
 // === Helpers ===
 function validateInput(input) {
@@ -369,30 +426,6 @@ function validateInput(input) {
     return false;
   } else {
     input.classList.remove("invalid");
-    if (error) error.classList.remove("active");
-    return true;
-  }
-}
-
-// touched флаг за селектите
-const touchedSelects = { region: false, office: false };
-
-function validateSelect(id, force = false) {
-  const select = document.getElementById(id);
-  const wrapper = select.tomselect?.wrapper;
-  const error = select.nextElementSibling;
-
-  // ако не е пипано и не е принудителна проверка → не правим нищо
-  if (!touchedSelects[id] && !force) {
-    return true;
-  }
-
-  if (!select.value) {
-    if (wrapper) wrapper.classList.add("invalid");
-    if (error) error.classList.add("active");
-    return false;
-  } else {
-    if (wrapper) wrapper.classList.remove("invalid");
     if (error) error.classList.remove("active");
     return true;
   }
@@ -423,26 +456,14 @@ document.querySelector("button[onclick*='delivery-form']").addEventListener("cli
   e.preventDefault();
   const form = document.getElementById("delivery-form");
   let valid = true;
-
-  // Input-и
-  form.querySelectorAll(".my-input").forEach(input => {
-    if (!validateInput(input)) valid = false;
-  });
-
-  // Select-и → тук вече force=true
-  ["region", "office"].forEach(id => {
-    touchedSelects[id] = true; // насила маркираме като пипано
-    if (!validateSelect(id, true)) valid = false;
-  });
-
-  if (valid) {
-    form.submit();
-  }
+  form.querySelectorAll(".my-input").forEach(input => { if (!validateInput(input)) valid = false; });
+  ["region", "office"].forEach(id => { touchedSelects[id] = true; if (!validateSelect(id, true)) valid = false; });
+  if (valid) { form.submit(); }
 });
 
 </script>
 
-<!-- JS -->
+<!-- Tom Select -->
 <script>
 let econtData = [];
 let speedyData = [];
@@ -524,119 +545,145 @@ document.querySelectorAll("input[name='delivery_method']").forEach(radio => {
 })();
 </script>
 
-
-
-
-
 <script>
-  document.querySelectorAll('.faq-question').forEach(button => {
-    button.addEventListener('click', () => {
-      const faqItem = button.closest('.faq-item');
-      const answer = button.nextElementSibling;
-      const icon = button.querySelector('svg');
+// === Глобални променливи ===
+const touchedSelects = { region: false, office: false };
 
-      // затваряне на другите
-      document.querySelectorAll('.faq-item').forEach(item => {
-        if (item !== faqItem) {
-          item.classList.remove('active');
-          item.querySelector('.faq-answer').classList.add('hidden');
-          item.querySelector('svg').classList.remove('svg-active');
-        }
-      });
-
-      // превключване на текущия
-      faqItem.classList.toggle('active');
-      answer.classList.toggle('hidden');
-      icon.classList.toggle('svg-active');
-    });
-  });
-</script>
-
-<script>
-  function handleSearch(query) {
-  if (query) {
-    window.location.href = `catalog.html?search=${encodeURIComponent(query)}`;
-  }
-}
-
-// Function to handle search icon visibility and styling
-function handleSearchIconToggle(inputId, defaultIconId, activeIconId) {
-  const input = document.getElementById(inputId);
-  const defaultIcon = document.getElementById(defaultIconId);
-  const activeIcon = document.getElementById(activeIconId);
-  const clearSearchButton = document.getElementById('clear-search');
-
-  // Get the clear button
-  function update() {
-    // Ensure input element exists before proceeding
-    if (!input) return;
-    const isActive = document.activeElement === input || input.value.trim() !== '';
-
-    // Toggle icon visibility
-    if (defaultIcon) defaultIcon.style.opacity = isActive ? '0' : '1';
-    if (activeIcon) activeIcon.style.opacity = isActive ? '1' : '0';
-
-    // Toggle text color
-    if (isActive) {
-      if (defaultIcon) defaultIcon.classList.add('text-blue-500');
-      if (activeIcon) activeIcon.classList.add('text-blue-500');
-      // Show clear button if active and has value
-      if (clearSearchButton) clearSearchButton.classList.remove('hidden');
-    } else {
-      if (defaultIcon) defaultIcon.classList.remove('text-blue-500');
-      if (activeIcon) activeIcon.classList.remove('text-blue-500');
-      // Hide clear button
-      if (clearSearchButton) clearSearchButton.classList.add('hidden');
-    }
-  }
-
-  if (input) {
-    // Only add listeners if input exists
-    input.addEventListener('focus', update);
-    input.addEventListener('blur', update);
-    input.addEventListener('input', update);
-    // Initial update on page load
-    update();
-  }
-
-  // Add event listener for clear search button
-  if (clearSearchButton) {
-    clearSearchButton.addEventListener('click', () => {
-      if (input) input.value = '';
-      update(); // Update icons/button visibility after clearing
-      handleSearch(''); // Trigger a search with an empty query to reset catalog
-    });
-  }
-}
-
-// Initialize search icon toggles for both mobile and desktop
-handleSearchIconToggle('mobile-search-input', 'mobile-search-icon-default', 'mobile-search-icon-active');
-handleSearchIconToggle('desktop-search-input', 'desktop-search-icon-default', 'desktop-search-icon-active');
-
-// Mobile menu toggle
-const toggleBtn = document.getElementById('mobile-menu-toggle');
-const mobileMenu = document.getElementById('mobile-menu');
-
-toggleBtn.addEventListener('click', () => {
-  mobileMenu.classList.toggle('-translate-x-full');
-});
-
-// Desktop header scroll hide/show
-let lastScrollY = window.scrollY;
-const nav = document.getElementById("nav-buttons-desktop");
-
-window.addEventListener("scroll", () => {
-  if (window.scrollY > lastScrollY) {
-    // Scrolling down – hide nav with slide up
-    nav.classList.add("-translate-y-full");
+// === Helpers ===
+function validateInput(input) {
+  const error = input.nextElementSibling;
+  if (!input.checkValidity()) {
+    input.classList.add("invalid");
+    if (error) error.classList.add("active");
+    return false;
   } else {
-    // Scrolling up – show nav with slide down
-    nav.classList.remove("-translate-y-full");
+    input.classList.remove("invalid");
+    if (error) error.classList.remove("active");
+    return true;
   }
-  lastScrollY = window.scrollY;
+}
+
+function validateSelect(id, force = false) {
+  const select = document.getElementById(id);
+  const wrapper = select.tomselect?.wrapper;
+  const error = select.nextElementSibling;
+
+  if (!touchedSelects[id] && !force) return true;
+
+  if (!select.value) {
+    if (wrapper) wrapper.classList.add("invalid");
+    if (error) error.classList.add("active");
+    return false;
+  } else {
+    if (wrapper) wrapper.classList.remove("invalid");
+    if (error) error.classList.remove("active");
+    return true;
+  }
+}
+
+// === Input-и ===
+document.querySelectorAll(".my-input").forEach(input => {
+  input.addEventListener("blur", () => validateInput(input));
+  input.addEventListener("input", () => validateInput(input));
+});
+
+// === Tom Select-и ===
+["region", "office"].forEach(id => {
+  const select = document.getElementById(id);
+  if (select.tomselect) {
+    select.tomselect.on("focus", () => { touchedSelects[id] = true; });
+    select.tomselect.on("dropdown_open", () => { touchedSelects[id] = true; });
+    select.tomselect.on("blur", () => validateSelect(id));
+    select.tomselect.on("change", () => validateSelect(id));
+  }
+});
+
+// === Към плащане ===
+document.addEventListener("DOMContentLoaded", () => {
+  const goToPaymentBtn = document.getElementById("go-to-payment");
+  if (!goToPaymentBtn) return;
+
+  goToPaymentBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const form = document.getElementById("delivery-form");
+    let valid = true;
+
+    form.querySelectorAll(".my-input").forEach(input => { 
+      if (!validateInput(input)) valid = false; 
+    });
+
+    ["region", "office"].forEach(id => { 
+      touchedSelects[id] = true; 
+      if (!validateSelect(id, true)) valid = false; 
+    });
+
+    if (valid) {
+      document.getElementById("payment-section").classList.remove("hidden");
+      window.scrollTo({ top: document.getElementById("payment-section").offsetTop, behavior: "smooth" });
+    } else {
+      alert("Моля, попълнете всички задължителни полета.");
+    }
+  });
+});
+
+// === Завършване на поръчката ===
+document.getElementById("finishOrderBtn").addEventListener("click", function () {
+  const regionEl = document.getElementById("region").tomselect;
+  const officeEl = document.getElementById("office").tomselect;
+
+  const regionValue = regionEl?.getValue() || "";
+  const regionLabel = regionEl?.options[regionValue]?.text || "";
+
+  const officeValue = officeEl?.getValue() || "";
+  const officeLabel = officeEl?.options[officeValue]?.text || "";
+
+  // 🔑 Взимаме продуктите от localStorage (винаги от ключ "cart")
+  const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
+
+  console.log("Cart items:", cartItems);
+
+  // Масив с чисти данни
+  const products = cartItems.map(p => ({
+    id: p.productId || p.id,
+    name: p.name || "",
+    quantity: p.quantity || 1,
+    price: p.price || 0
+  })).filter(p => p.id);
+
+  const data = {
+    name: document.getElementById("name").value.trim(),
+    surname: document.getElementById("surname").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    delivery_method: document.querySelector("input[name=delivery_method]:checked")?.value || "",
+    region_label: regionLabel,
+    office_label: officeLabel,
+    notes: document.getElementById("notes").value.trim(),
+    products: cartItems,
+    paymentMethod: document.querySelector("input[name=paymentMethod]:checked")?.value || "На място",
+    totalPrice: cartItems.reduce((sum, p) => sum + (p.price * p.quantity), 0).toFixed(2)
+  };
+
+  fetch("https://script.google.com/macros/s/AKfycbxCTiNP2l8Fd7TH8SUjVTEZ1F7qmE43BmTRAW4kf3eb8laJxbqg04jAzqP59P-BNKhV/exec", {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(res => res.text())
+  .then(() => {
+    alert("✅ Поръчката е приета успешно!");
+    localStorage.removeItem("cart"); // 🟢 ключът вече е унифициран
+    window.location.href = "index.html";
+  })
+  .catch(err => {
+    console.error("Грешка при изпращане", err);
+    alert("⚠️ Възникна грешка, опитайте отново.");
+  });
 });
 </script>
 
+
+    <script src="js/faq.js"></script>
+    <script src="js/search.js"></script>
     <script src="js/productslist.js"></script>
     <script src="js/delivery.js"></script>
     <script src="js/cart.js"></script>
