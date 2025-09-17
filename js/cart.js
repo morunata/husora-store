@@ -63,6 +63,7 @@ function renderCart() {
     const option = variant !== null ? variation?.options.find(opt => opt.id === variant) : null;
 
     const price = option ? option.price : product.price;
+    item.price = price; // 👈 нов ред
     const image = variation?.spotlightImage || product.images[0];
 
     const row = document.createElement("div");
@@ -247,11 +248,20 @@ function renderCart() {
 }
 
 function updateQuantity(id, change) {
-    const item = cart.find(i => i.id === id);
-    if (item) {
-        item.quantity = Math.max(1, item.quantity + change);
-        saveCart();
-    }
+  const item = cart.find(i => i.id === id);
+  if (item) {
+    item.quantity = Math.max(1, item.quantity + change);
+
+    // изчисляваме цената отново
+    const { base, model, variant } = parseProductId(item.id);
+    const product = products.find(p => p.id === base);
+    const variation = model !== null ? product.variations.find(v => v.id === model) : null;
+    const option = variant !== null ? variation?.options.find(opt => opt.id === variant) : null;
+
+    item.price = option ? option.price : product.price; // 👈 добавено
+
+    saveCart();
+  }
 }
 
 function removeItem(id) {
@@ -279,6 +289,7 @@ function renderOrderSummary() {
     const option = variant !== null ? variation?.options.find(opt => opt.id === variant) : null;
 
     const price = option ? option.price : product.price;
+    item.price = price; // 👈 нов ред
     const itemTotalPrice = price * item.quantity;
     totalOrderPrice += itemTotalPrice;
 
